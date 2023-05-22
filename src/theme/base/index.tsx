@@ -1,7 +1,8 @@
 import { Inter } from "next/font/google";
 import { createTheme } from "@mui/material/styles";
-import breakpoints from './breakpoints';
+import breakpoints from "./breakpoints";
 import palette from "./palette";
+import cssBaseline from "./cssBaseline";
 
 export const inter = Inter({
   weight: ["300", "400", "500", "700"],
@@ -17,8 +18,12 @@ const defaultTheme = createTheme({
   typography: {
     fontFamily: inter.style.fontFamily,
   },
-  breakpoints
+  breakpoints,
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: cssBaseline,
+    },
+  },
 });
 
 export default defaultTheme;
-
