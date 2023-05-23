@@ -1,3 +1,4 @@
+import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -9,6 +10,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import UserAuthAlert from "@/components/userAuthAlert";
 
 type LoginViewProps = {
   formProps: {
@@ -16,6 +18,8 @@ type LoginViewProps = {
     emailIsValid: boolean;
     handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
     handlePasswordChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    email: string;
+    userAlreadyExist: boolean;
   };
 };
 
@@ -25,10 +29,16 @@ const LoginView = ({ formProps }: LoginViewProps) => {
     emailIsValid,
     handleSubmit,
     handlePasswordChange,
+    email,
+    userAlreadyExist,
   } = formProps;
 
   return (
     <Container maxWidth="xs">
+      <UserAuthAlert
+        userAlreadyExist={userAlreadyExist}
+        text="An user with that email has not been created already!"
+      />
       <Box
         sx={{
           marginTop: 8,
@@ -45,7 +55,7 @@ const LoginView = ({ formProps }: LoginViewProps) => {
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <TextField
-            error={!emailIsValid}
+            error={!emailIsValid && email !== ""}
             margin="normal"
             required
             fullWidth

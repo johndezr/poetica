@@ -8,6 +8,8 @@ export default function SignIn() {
     handlePasswordChange,
     emailIsValid,
     handleSubmit,
+    email,
+    userAlreadyExist,
   } = useLoginForm();
 
   const formProps = {
@@ -15,6 +17,8 @@ export default function SignIn() {
     handlePasswordChange,
     emailIsValid,
     handleSubmit,
+    email,
+    userAlreadyExist,
   };
 
   return <LoginView formProps={formProps} />;

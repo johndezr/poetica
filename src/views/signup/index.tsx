@@ -8,9 +8,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import { useEffect } from "react";
+import UserAuthAlert from "@/components/userAuthAlert";
 
 type SignupViewProps = {
   formProps: {
@@ -22,13 +20,6 @@ type SignupViewProps = {
   };
 };
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref
-) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
-
 export default function SignUp({ formProps }: SignupViewProps) {
   const {
     handleEmailChange,
@@ -37,35 +28,13 @@ export default function SignUp({ formProps }: SignupViewProps) {
     emailValue,
     userAlreadyExist,
   } = formProps;
-  const [openAlert, setOpenAlert] = React.useState(false);
-  const handleClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpenAlert(false);
-  };
-
-  useEffect(() => {
-    if (userAlreadyExist) {
-      setOpenAlert(true);
-    }
-  }, [userAlreadyExist]);
 
   return (
     <Container maxWidth="xs">
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        open={openAlert}
-        autoHideDuration={6000}
-        onClose={handleClose}
-      >
-        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
-          An user with that email has been created already!
-        </Alert>
-      </Snackbar>
+      <UserAuthAlert
+        userAlreadyExist={userAlreadyExist}
+        text="An user with that email has been created already!"
+      />
       <Box
         sx={{
           marginTop: 8,
