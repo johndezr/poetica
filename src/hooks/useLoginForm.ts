@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { emailHasErrors } from "../../utils/formValidation";
-import { getStorageValue, setStorageValue } from "./useLocalStorage";
-import { isUserAleadySignedUp } from "./useAuth";
+import { setStorageValue } from "./useLocalStorage";
+import { isUserAleadySignedUp, getUserFromStorage } from "./useAuth";
 
-const useLoginForm = () => {
+const useLoginForm = (updateUser: Function) => {
+  const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [emailIsValid, setEmailIsValid] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
@@ -24,17 +25,13 @@ const useLoginForm = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
     if (emailIsValid) {
       if (isUserAleadySignedUp(email)) {
         setUserAlreadyExist(false);
-        const formValues = {
-          email: <string>data.get("email"),
-          password: <string>data.get("password"),
-        };
-        setEmail(formValues.email);
-        setPassword(formValues.password);
-        console.log("formValues", formValues);
+        const user = getUserFromStorage(email);
+        setStorageValue("userId", user?.id);
+        updateUser(user);
+        router.push("/");
       } else {
         setUserAlreadyExist(true);
       }

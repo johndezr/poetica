@@ -10,19 +10,34 @@ import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
+import { UserValues } from "@/types/user";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 // TODO: import better way all the material components
+
+type HeaderProps = {
+  user: UserValues;
+  logout: () => void;
+};
 
 const pages = [
   { name: "Marketplace", href: "/" },
   { name: "Create Asset", href: "/" },
 ];
-const settings = ["Profile", "Logout"];
 
-function ResponsiveAppBar() {
+const Header = ({ user, logout }: HeaderProps) => {
+  const settings = [
+    { name: "Profile", href: "/" },
+    { name: "Logout", href: "/", onclick: () => logout() },
+  ];
+  const [isUserActive, setIsUserActive] = useState<Boolean>(false);
+
+  useEffect(() => {
+    setIsUserActive(user && user.email ? true : false);
+  }, [user]);
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -138,61 +153,69 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
+            {isUserActive && (
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting.name} onClick={setting.onclick}>
+                    <Typography textAlign="center">{setting.name}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            )}
             <Box sx={{ display: "flex" }}>
-              <Link href="/login">
-                <Button
-                  sx={{
-                    my: 2,
-                    color: "white",
-                    display: "block",
-                    textTransform: "none",
-                  }}
-                >
-                  Login
-                </Button>
-              </Link>
-              <Link href="/signup">
-                <Button
-                  sx={{
-                    my: 2,
-                    color: "white",
-                    display: "block",
-                    textTransform: "none",
-                  }}
-                >
-                  Sign Up
-                </Button>
-              </Link>
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, ml: 2 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
+              {!isUserActive ? (
+                <>
+                  <Link href="/login">
+                    <Button
+                      sx={{
+                        my: 2,
+                        color: "white",
+                        display: "block",
+                        textTransform: "none",
+                      }}
+                    >
+                      Login
+                    </Button>
+                  </Link>
+                  <Link href="/signup">
+                    <Button
+                      sx={{
+                        my: 2,
+                        color: "white",
+                        display: "block",
+                        textTransform: "none",
+                      }}
+                    >
+                      Sign Up
+                    </Button>
+                  </Link>
+                </>
+              ) : (
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, ml: 2 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              )}
             </Box>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
           </Box>
         </Toolbar>
       </Container>
     </AppBar>
   );
-}
-export default ResponsiveAppBar;
+};
+
+export default Header;

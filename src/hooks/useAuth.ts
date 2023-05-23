@@ -8,3 +8,9 @@ export const isUserAleadySignedUp = (email: string) => {
     (user: { email: string }) => user.email === email
   );
 };
+
+export const getUserFromStorage = (email: string) => {
+  return usersCollection.find(
+    (user: { email: string }) => user.email === email
+  );
+};

@@ -1,15 +1,16 @@
 import * as React from "react";
 import SignupView from "@/views/signup/";
 import useSignupForm from "@/hooks/useSignupForm";
+import { withUserContext } from "../src/contexts/UserStorage";
 
-export default function SignIn() {
+const SignUp = ({ updateUser }) => {
   const {
     handleEmailChange,
     emailIsValid,
     handleSubmit,
     emailValue,
     userAlreadyExist,
-  } = useSignupForm();
+  } = useSignupForm(updateUser);
 
   const formProps = {
     handleEmailChange,
@@ -20,4 +21,6 @@ export default function SignIn() {
   };
 
   return <SignupView formProps={formProps} />;
-}
+};
+
+export default withUserContext(SignUp);

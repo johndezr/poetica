@@ -5,8 +5,10 @@ import { getStorageValue, setStorageValue } from "./useLocalStorage";
 import { UserValues } from "../types/user";
 import { isUserAleadySignedUp } from "./useAuth";
 
-const useSignupForm = () => {
+const useSignupForm = (updateUser: Function) => {
+  const router = useRouter();
   const [values, setValues] = useState<UserValues>({
+    id: "",
     email: "",
     firstName: "",
     lastName: "",
@@ -17,10 +19,13 @@ const useSignupForm = () => {
 
   const usersCollection: UserValues[] = getStorageValue("users");
 
-  const saveUser = () => {
+  const saveUser = (formValues: UserValues) => {
     const users = usersCollection || [];
-    users.push(values);
+    users.push(formValues);
     setStorageValue("users", users);
+    setStorageValue("userId", formValues.id);
+    updateUser(formValues);
+    router.push("/");
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,6 +41,7 @@ const useSignupForm = () => {
     const userAlreadyExist = isUserAleadySignedUp(values.email);
     const formValues = {
       ...values,
+      id: "_" + Math.random().toString(36).substr(2, 9),
       firstName: <string>data.get("firstName"),
       lastName: <string>data.get("lastName"),
       password: <string>data.get("password"),
@@ -46,7 +52,7 @@ const useSignupForm = () => {
     }));
     setUserAlreadyExist(userAlreadyExist);
     if (emailIsValid) {
-      if (!userAlreadyExist) saveUser();
+      if (!userAlreadyExist) saveUser(formValues);
     }
   };
 
