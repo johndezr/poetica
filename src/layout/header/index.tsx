@@ -23,7 +23,7 @@ type HeaderProps = {
 };
 
 const pages = [
-  { name: "Marketplace", href: "/" },
+  { name: "Marketplace", href: "/marketplace" },
   { name: "Create Asset", href: "/" },
 ];
 
@@ -137,18 +137,18 @@ const Header = ({ user, logout }: HeaderProps) => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((link) => (
-              <Button
-                key={link.name}
-                onClick={handleCloseNavMenu}
-                sx={{
-                  my: 2,
-                  color: "white",
-                  display: "block",
-                  textTransform: "none",
-                }}
-              >
-                {link.name}
-              </Button>
+              <Link key={link.name} href={link.href}>
+                <Button
+                  sx={{
+                    my: 2,
+                    color: "white",
+                    display: "block",
+                    textTransform: "none",
+                  }}
+                >
+                  {link.name}
+                </Button>
+              </Link>
             ))}
           </Box>
 

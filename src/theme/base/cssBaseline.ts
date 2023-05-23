@@ -11,6 +11,10 @@ const cssBaseline = `
     color: inherit;
     text-decoration: none;
   }
-`
+  p, h1, h2, h3, h4, h5 {
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+  }
+`;
 
-export default cssBaseline
+export default cssBaseline;
