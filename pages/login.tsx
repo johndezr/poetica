@@ -2,8 +2,16 @@ import * as React from "react";
 import LoginView from "@/views/login/";
 import useLoginForm from "@/hooks/useLoginForm";
 import { withUserContext } from "../src/contexts/UserStorage";
+import { useRouter } from "next/router";
 
-const SignIn = ({ updateUser }) => {
+type SignInProps = {
+  updateUser: () => void;
+};
+
+const SignIn = ({ updateUser }: SignInProps) => {
+  const router = useRouter();
+  const { redirect } = router.query;
+
   const {
     handleEmailChange,
     handlePasswordChange,
@@ -11,7 +19,7 @@ const SignIn = ({ updateUser }) => {
     handleSubmit,
     email,
     userAlreadyExist,
-  } = useLoginForm(updateUser);
+  } = useLoginForm(updateUser, redirect);
 
   const formProps = {
     handleEmailChange,

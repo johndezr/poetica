@@ -24,7 +24,7 @@ type HeaderProps = {
 
 const pages = [
   { name: "Marketplace", href: "/marketplace" },
-  { name: "Create Asset", href: "/" },
+  { name: "Create Asset", href: "/create-asset" },
 ];
 
 const Header = ({ user, logout }: HeaderProps) => {
