@@ -7,6 +7,7 @@ import createEmotionCache from "../utils/createEmotionCache";
 import defaultTheme from "@/theme/base";
 import Layout from "@/layout";
 import { UserStore } from "@/contexts/UserStorage";
+import Web3Provider from "@/contexts/Web3";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -26,11 +27,13 @@ export default function MyApp(props: MyAppProps) {
       <ThemeProvider theme={defaultTheme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <UserStore>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </UserStore>
+        <Web3Provider>
+          <UserStore>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </UserStore>
+        </Web3Provider>
       </ThemeProvider>
     </CacheProvider>
   );
