@@ -4,7 +4,7 @@ import { emailHasErrors } from "../../utils/formValidation";
 import { setStorageValue } from "./useLocalStorage";
 import { isUserAleadySignedUp, getUserFromStorage } from "./useAuth";
 
-const useLoginForm = (updateUser: Function, redirect: string) => {
+const useLoginForm = (updateUser: Function, redirect: string | unknown) => {
   const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [emailIsValid, setEmailIsValid] = useState<boolean>(false);
@@ -31,7 +31,7 @@ const useLoginForm = (updateUser: Function, redirect: string) => {
         const user = getUserFromStorage(email);
         setStorageValue("userId", user?.id);
         updateUser(user);
-        router.push(redirect ? redirect : "/");
+        router.push(redirect ? redirect : `/profile/${user?.id}`);
       } else {
         setUserAlreadyExist(true);
       }

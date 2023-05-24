@@ -14,6 +14,7 @@ import { UserValues } from "@/types/user";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 // TODO: import better way all the material components
 
@@ -28,9 +29,21 @@ const pages = [
 ];
 
 const Header = ({ user, logout }: HeaderProps) => {
+  const router = useRouter();
   const settings = [
-    { name: "Profile", href: "/" },
-    { name: "Logout", href: "/", onclick: () => logout() },
+    {
+      name: "Profile",
+      href: "/",
+      onclick: () => router.push(`/profile/${user && user.id ? user.id : ""}`),
+    },
+    {
+      name: "Logout",
+      href: "/",
+      onclick: () => {
+        logout();
+        router.push("/");
+      },
+    },
   ];
   const [isUserActive, setIsUserActive] = useState<Boolean>(false);
 

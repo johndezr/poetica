@@ -1,14 +1,10 @@
-import NftCard from "@/components/nftCard";
+import NftCard from "./nftCard";
 import Box from "@mui/material/Box";
 import { Poem } from "@/types/poem";
 import { Grid, Typography } from "@mui/material";
 import { Key } from "react";
 
-type MarketplaceProps = {
-  poems: Poem[];
-};
-
-const Marketplace = ({ poems }: MarketplaceProps) => {
+const Marketplace = ({ poems }: { poems: Poem[] }) => {
   return (
     <Box sx={{ mt: 5 }}>
       <Box sx={{ mb: 3 }}>
