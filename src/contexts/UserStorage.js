@@ -1,4 +1,5 @@
 import React from "react";
+import { getStorageValue, setStorageValue } from "../hooks/useLocalStorage";
 
 const UserContext = React.createContext();
 
@@ -8,15 +9,24 @@ class UserStore extends React.Component {
   };
 
   componentDidMount() {
-    const users = JSON.parse(localStorage.getItem("users"));
-    const userId = JSON.parse(localStorage.getItem("userId"));
-    const user = users?.find((user) => user.id === userId);
+    const user = this.getCurrentLocalStorageUser();
     if (user) {
       this.setState({ user });
     }
   }
 
+  getCurrentLocalStorageUser = () => {
+    const users = getStorageValue("users");
+    const userId = getStorageValue("userId");
+    const user = users?.find((user) => user.id === userId);
+    return user;
+  };
+
   updateUser = (user) => {
+    const users = getStorageValue("users");
+    const index = users.findIndex((u) => u.id === user.id);
+    users[index] = user;
+    setStorageValue("users", users);
     this.setState({ user });
   };
 

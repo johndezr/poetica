@@ -4,7 +4,11 @@ import { emailHasErrors } from "../../utils/formValidation";
 import { setStorageValue } from "./useLocalStorage";
 import { isUserAleadySignedUp, getUserFromStorage } from "./useAuth";
 
-const useLoginForm = (updateUser: Function, redirect: string | unknown) => {
+const useLoginForm = (
+  updateUser: Function,
+  redirect: string | unknown,
+  account: string
+) => {
   const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [emailIsValid, setEmailIsValid] = useState<boolean>(false);
@@ -30,6 +34,13 @@ const useLoginForm = (updateUser: Function, redirect: string | unknown) => {
         setUserAlreadyExist(false);
         const user = getUserFromStorage(email);
         setStorageValue("userId", user?.id);
+
+        if (!user?.wallet && account) {
+          user!.wallet = {
+            address: account,
+          };
+        }
+
         updateUser(user);
         router.push(redirect ? redirect : `/profile/${user?.id}`);
       } else {

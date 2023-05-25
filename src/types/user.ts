@@ -4,4 +4,7 @@ export type UserValues = {
   firstName: string;
   lastName: string;
   password: string;
+  wallet?: {
+    address: string;
+  };
 };

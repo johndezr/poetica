@@ -38,7 +38,7 @@ function a11yProps(index: number) {
   };
 }
 
-export default function BasicTabs({ children: ProfileCollection }) {
+export default function BasicTabs({ children }) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -61,10 +61,10 @@ export default function BasicTabs({ children: ProfileCollection }) {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        {ProfileCollection}
+        {children[0]}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        {children[1]}
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item Three
