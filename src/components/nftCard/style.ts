@@ -15,11 +15,7 @@ const useStyles = makeStyles()((theme) => {
       padding: theme.spacing(0, 1),
     },
     priceChip: {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText,
-      borderRadius: theme.spacing(0.5),
-      fontSize: theme.typography.pxToRem(12),
-      fontWeight: 600,
+      marginLeft: theme.spacing(1),
     },
     ownerBox: {
       display: "flex",

@@ -34,7 +34,7 @@ const Profile = ({ user }: { user: UserValues }) => {
       setBalance(walletBalance);
       setTransactions(transactionHistory);
     })();
-  }, [getBalance, getOwnListNfts, getTransactionHistory]);
+  }, []);
 
   if (!isReady) {
     return <></>;

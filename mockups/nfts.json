@@ -1,20 +1,23 @@
 [
   {
     "id": "1",
-    "title": "Luna Congelada",
-    "description": "Luna congelada de Júpiter Luna congelada de Júpiter",
-    "image": "https://res.cloudinary.com/dgkjzoae8/image/upload/c_scale,e_art:audrey,q_auto:best,w_360/v1684873774/IMG_1204_xyy6jg.png",
-    "price": "0.45",
-    "daysLeft": "2",
-    "creator": "James Smith"
+    "title": "Chill Surf Mo #1",
+    "description": "Find Your Zen on the Board: Discover the Perfect Balance of Nature and Adventure.",
+    "image": "https://res.cloudinary.com/dgkjzoae8/image/upload/v1685043572/x3xsaoRB_400x400_yhpdg3.jpg",
+    "price": "0.85"
   },
   {
     "id": "2",
-    "title": "Luna Congelada",
-    "description": "Luna congelada de Júpiter Luna congelada de Júpiter",
-    "image": "https://res.cloudinary.com/dgkjzoae8/image/upload/c_scale,e_art:audrey,q_auto:best,w_360/v1684873774/IMG_1204_xyy6jg.png",
-    "price": "0.45",
-    "daysLeft": "2",
-    "creator": "James Smith"
+    "title": "Chill Surf Mo #2",
+    "description": "Embrace the Surfing Lifestyle: Ride the Waves and Feel the Freedom of the Ocean.",
+    "image": "https://res.cloudinary.com/dgkjzoae8/image/upload/v1685043572/Chillin-Ape-Surf-Club-2-360x360_z8h6ax.jpg",
+    "price": "0.25"
+  },
+  {
+    "id": "3",
+    "title": "Chill Surf Mo #3",
+    "description": "Unleash Your Inner Water Warrior: Conquer the Waves and Carve Your Own Path.",
+    "image": "https://res.cloudinary.com/dgkjzoae8/image/upload/v1685043572/Chillin-Ape-Surf-Club-4-360x360_okujrg.jpg",
+    "price": "0.95"
   }
 ]

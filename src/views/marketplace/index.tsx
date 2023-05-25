@@ -7,9 +7,10 @@ import { Key } from "react";
 type MarketplaceProps = {
   nfts: Nft[];
   buyNft: (id: number, value: number) => void;
+  account: string;
 };
 
-const Marketplace = ({ nfts, buyNft }: MarketplaceProps) => {
+const Marketplace = ({ nfts, buyNft, account }: MarketplaceProps) => {
   return (
     <Box sx={{ mt: 2 }}>
       <Grid
@@ -19,7 +20,11 @@ const Marketplace = ({ nfts, buyNft }: MarketplaceProps) => {
       >
         {nfts.map((nft: Nft, index: Key) => (
           <Grid item xs={1} sm={4} md={4} key={index}>
-            <NftCard buyNft={buyNft} nft={nft} />
+            <NftCard
+              thisNftBelongsToMe={nft.creatorAddress === account}
+              buyNft={buyNft}
+              nft={nft}
+            />
           </Grid>
         ))}
       </Grid>

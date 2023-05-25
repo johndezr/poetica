@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Stack } from "@mui/material";
+import useStyles from "./style";
 
 type IconChipProps = {
   imgSrc: string;
@@ -22,10 +23,13 @@ const IconChip = ({
   width,
   height,
 }: IconChipProps) => {
+  const { classes } = useStyles();
   return (
     <Stack direction="row" alignItems="center">
       <Image src={`/${imgSrc}`} alt={imgSrc} width={width} height={height} />
-      <p style={textStyles}>{text}</p>
+      <p className={classes.priceChip} style={textStyles}>
+        {text}
+      </p>
     </Stack>
   );
 };

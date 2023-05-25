@@ -24,8 +24,8 @@ const MainCard = ({ nft, cta }: MainCardProps) => {
     <Card className={classes.root}>
       <CardMedia
         component="img"
-        alt="green iguana"
-        height={350}
+        alt="nft image"
+        height={300}
         image={nft.image}
       />
       <CardContent sx={{ mx: 1 }}>
@@ -39,9 +39,8 @@ const MainCard = ({ nft, cta }: MainCardProps) => {
       <CardActions>
         <Box className={classes.priceAndCtaBox}>
           <IconChip
-            className={classes.priceChip}
             imgSrc={"icon-ethereum.svg"}
-            text={`${nft.price}ETH`}
+            text={`${nft.price} ETH`}
             width={10}
             height={18}
           />

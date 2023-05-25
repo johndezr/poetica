@@ -31,7 +31,7 @@ const useAssetForm = (createNft, user) => {
       const data = await res.json();
       return data.secure_url;
     } catch (error) {
-      console.log(error);
+      alert("Error uploading image", error.message);
     }
   };
 

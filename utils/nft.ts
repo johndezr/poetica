@@ -16,6 +16,8 @@ export const getNtfsMatchMockup = (nfts: Nft[]) => {
             price: nftFromWallet?.price,
             isListed: nftFromWallet?.isListed,
             creatorAddress: nftFromWallet?.creator,
+            image: nftFromWallet?.image,
+            owned: nftFromWallet?.owned,
           },
         };
       }
@@ -26,7 +28,7 @@ export const getNtfsMatchMockup = (nfts: Nft[]) => {
 export const saveNftInLocalStorage = (nft: Nft) => {
   const nftsLocalStorage = JSON.parse(localStorage.getItem("nfts") || "[]");
   const nftIndex = nftsLocalStorage.findIndex(
-    (nftLocalStorage: Nft) => nftLocalStorage.id === nft.id
+    (nftLocalStorage: Nft) => Number(nftLocalStorage.id) === nft.id
   );
   if (nftIndex === -1) {
     nftsLocalStorage.push(nft);
@@ -38,7 +40,7 @@ export const saveNftInLocalStorage = (nft: Nft) => {
 
 export const injectNftsLocalStorage = () => {
   const areNftsInLocalStorage = localStorage.getItem("nfts") || [];
-  if (!areNftsInLocalStorage) {
+  if (!areNftsInLocalStorage.length) {
     localStorage.setItem("nfts", JSON.stringify(nftsArrMockup));
   }
 };
