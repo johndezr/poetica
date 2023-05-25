@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-const useAssetForm = () => {
+const useAssetForm = (createNft, user) => {
   const router = useRouter();
 
   const [values, setValues] = useState({
@@ -44,10 +44,14 @@ const useAssetForm = () => {
       ...values,
       name: <string>data.get("name"),
       description: <string>data.get("description"),
-      price: <number>(<unknown>data.get("price")),
+      price: <string>(<unknown>data.get("price")),
     };
-    const url = await uploadImage(values.file);
-    console.log(formValues, url);
+    const url = await uploadImage(values.file as File);
+    await (createNft as any)(url, formValues.price, {
+      title: formValues.name,
+      description: formValues.description,
+      owned: `${user.firstName} ${user.lastName}`,
+    });
   };
 
   return {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { emailHasErrors } from "../../utils/formValidation";
-import { setStorageValue } from "./useLocalStorage";
+import { setStorageValue } from "../../utils/storage";
 import { isUserAleadySignedUp, getUserFromStorage } from "./useAuth";
 
 const useLoginForm = (

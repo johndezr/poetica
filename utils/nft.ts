@@ -1,21 +1,44 @@
-import { Poem } from "../src/types/poem";
+import { Nft } from "../src/types/nft";
 import poemsArrMockup from "../mockups/poems.json";
 
-export const getNtfsMatchMockup = (nfts: Poem[]) => {
-  return poemsArrMockup
-    .map((poem) => {
-      const nft = nfts.find((nft) => nft.tokenId === Number(poem.id));
-      if (nft) {
+export const getNtfsMatchMockup = (nfts: Nft[]) => {
+  const nftsLocalStorage = JSON.parse(localStorage.getItem("nfts") || "[]");
+  return nftsLocalStorage
+    .map((nft: Nft) => {
+      const nftFromWallet = nfts.find(
+        (nftw) => nftw.tokenId === Number(nft.id)
+      );
+      if (nftFromWallet) {
         return {
-          ...poem,
+          ...nft,
           ...{
-            tokenId: nft?.tokenId,
-            price: nft?.price,
-            isListed: nft?.isListed,
-            creatorAddress: nft?.creator,
+            tokenId: nftFromWallet?.tokenId,
+            price: nftFromWallet?.price,
+            isListed: nftFromWallet?.isListed,
+            creatorAddress: nftFromWallet?.creator,
           },
         };
       }
     })
-    .filter((poem) => poem);
+    .filter((nft: Nft) => nft);
+};
+
+export const saveNftInLocalStorage = (nft: Nft) => {
+  const nftsLocalStorage = JSON.parse(localStorage.getItem("nfts") || "[]");
+  const nftIndex = nftsLocalStorage.findIndex(
+    (nftLocalStorage: Nft) => nftLocalStorage.id === nft.id
+  );
+  if (nftIndex === -1) {
+    nftsLocalStorage.push(nft);
+  } else {
+    nftsLocalStorage[nftIndex] = nft;
+  }
+  localStorage.setItem("nfts", JSON.stringify(nftsLocalStorage));
+};
+
+export const injectNftsLocalStorage = () => {
+  const areNftsInLocalStorage = localStorage.getItem("nfts") || [];
+  if (!areNftsInLocalStorage) {
+    localStorage.setItem("nfts", JSON.stringify(poemsArrMockup));
+  }
 };

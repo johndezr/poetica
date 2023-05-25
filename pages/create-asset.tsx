@@ -4,13 +4,18 @@ import useAssetForm from "@/hooks/useAssetForm";
 import { withUserContext } from "../src/contexts/UserStorage";
 import { UserValues } from "../src/types/user";
 import { useRouter } from "next/router";
+import { useWeb3 } from "../src/contexts/Web3";
 
 type CreateAssetProps = {
   user: UserValues;
 };
 
 const CreateAsset = ({ user }: CreateAssetProps) => {
-  const { handleSubmit, handleFileChange, fileValue } = useAssetForm();
+  const { createNft } = useWeb3();
+  const { handleSubmit, handleFileChange, fileValue } = useAssetForm(
+    createNft,
+    user
+  );
   const formProps = { handleSubmit, handleFileChange, fileValue };
   const router = useRouter();
 

@@ -6,6 +6,7 @@ import { UserValues } from "../../src/types/user";
 import { useWeb3 } from "@/contexts/Web3";
 import { useEffect } from "react";
 import { Backdrop, CircularProgress } from "@mui/material";
+import { injectNftsLocalStorage } from "../../utils/nft";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -18,6 +19,7 @@ const Layout: React.FC<LayoutProps> = ({ children, user, logout }) => {
 
   useEffect(() => {
     initWeb3();
+    injectNftsLocalStorage();
   }, []);
 
   // const getNftInfo = async () => {

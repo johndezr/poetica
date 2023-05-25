@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { emailHasErrors } from "../../utils/formValidation";
-import { getStorageValue, setStorageValue } from "./useLocalStorage";
+import { getStorageValue, setStorageValue } from "../../utils/storage";
 import { UserValues } from "../types/user";
 import { isUserAleadySignedUp } from "./useAuth";
 
-const useSignupForm = (updateUser: Function) => {
+const useSignupForm = (updateUser: Function, account: string) => {
   const router = useRouter();
   const [values, setValues] = useState<UserValues>({
     id: "",
@@ -22,8 +22,13 @@ const useSignupForm = (updateUser: Function) => {
   const saveUser = (formValues: UserValues) => {
     const users = usersCollection || [];
     users.push(formValues);
+
     setStorageValue("users", users);
     setStorageValue("userId", formValues.id);
+    if (account) {
+      formValues.wallet = { address: account };
+    }
+
     updateUser(formValues);
     router.push("/");
   };

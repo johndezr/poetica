@@ -1,4 +1,4 @@
-import { getStorageValue } from "./useLocalStorage";
+import { getStorageValue } from "../../utils/storage";
 import { UserValues } from "../types/user";
 
 const usersCollection: UserValues[] = getStorageValue("users");
