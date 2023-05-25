@@ -15,6 +15,7 @@ import { UserValues } from "@/types/user";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { stringAvatar } from "../../../utils/misc";
 
 // TODO: import better way all the material components
 
@@ -220,7 +221,9 @@ const Header = ({ user, logout }: HeaderProps) => {
                 </>
               ) : (
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, ml: 2 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar
+                    {...stringAvatar(`${user.firstName} ${user.lastName}`)}
+                  />
                 </IconButton>
               )}
             </Box>

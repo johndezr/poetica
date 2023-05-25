@@ -6,6 +6,7 @@ import { useWeb3 } from "@/contexts/Web3";
 import { Nft } from "@/types/nft";
 import { useState, useEffect } from "react";
 import { getNtfsMatchMockup } from "../../utils/nft";
+import { Transaction } from "../../src/types/transaction";
 
 const Profile = ({ user }: { user: UserValues }) => {
   const { query, isReady, push } = useRouter();
@@ -14,17 +15,25 @@ const Profile = ({ user }: { user: UserValues }) => {
     web3Api: { isWalletConnected },
     getOwnListNfts,
     saleNft,
+    getBalance,
+    getTransactionHistory,
   } = useWeb3();
-  const [nfts, setNfts] = useState<Nft[] | undefined>([]);
+  const [nfts, setNfts] = useState<Nft[]>([]);
+  const [balance, setBalance] = useState<number>(0);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   useEffect(() => {
     (async () => {
       const nfts = await getOwnListNfts();
-      console.log(nfts);
       const matchedNtfsArr = getNtfsMatchMockup(nfts);
+      const walletBalance = await getBalance();
+      const transactionHistory = await getTransactionHistory();
+
       setNfts(matchedNtfsArr);
+      setBalance(walletBalance);
+      setTransactions(transactionHistory);
     })();
-  }, [getOwnListNfts]);
+  }, [getBalance, getOwnListNfts, getTransactionHistory]);
 
   if (!isReady) {
     return <></>;
@@ -42,8 +51,10 @@ const Profile = ({ user }: { user: UserValues }) => {
     <ProfileView
       isWalletConnected={isWalletConnected}
       user={user}
-      nfts={nfts}
       saleNft={saleNft}
+      nfts={nfts}
+      balance={balance}
+      transactions={transactions}
     ></ProfileView>
   );
 };

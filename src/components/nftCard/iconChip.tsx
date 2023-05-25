@@ -25,7 +25,7 @@ const IconChip = ({
   return (
     <Stack direction="row" alignItems="center">
       <Image
-        src={imgSrc}
+        src={`/${imgSrc}`}
         alt={imgSrc}
         width={width}
         height={height}

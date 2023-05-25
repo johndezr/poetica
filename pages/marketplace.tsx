@@ -12,7 +12,6 @@ const Marketplace: NextPage = () => {
     (async () => {
       const nfts = await listNfts();
       const matchedNtfsArr = getNtfsMatchMockup(nfts);
-      console.log(matchedNtfsArr);
       setNfts(matchedNtfsArr);
     })();
   }, [listNfts]);

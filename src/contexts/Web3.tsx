@@ -6,6 +6,11 @@ import { NftCore } from "../types/nft";
 import { NftMarketContract } from "../types/nftMarketContract";
 import { saveNftInLocalStorage } from "../../utils/nft";
 import { Nft } from "../types/nft";
+import Web3 from "web3";
+import { Transaction } from "../types/transaction";
+
+const MIN_BLOCK_NUMBER = 0;
+const MAX_BLOCK_NUMBER = 20;
 
 function createDefaultState(): Web3State {
   return {
@@ -173,6 +178,55 @@ const Web3Provider: React.FC<Web3ProviderProps> = ({
     [web3Api]
   );
 
+  const getBalance = useCallback(async () => {
+    const { provider, account } = web3Api;
+    const balance = await provider?.getBalance(account);
+    const balanceInEth = ethers.utils.formatEther(balance);
+    return balanceInEth;
+  }, [web3Api]);
+
+  const getTransactionsByAccount = async (
+    myaccount: string | null,
+    startBlockNumber: number,
+    endBlockNumber: number,
+    eth: { getBlock: (arg0: any, arg1: boolean) => any }
+  ) => {
+    const history = [] as Transaction[];
+    for (let i = startBlockNumber; i <= endBlockNumber; i++) {
+      const block = await eth.getBlock(i, true);
+      if (block != null && block.transactions != null) {
+        block.transactions.forEach((tx: Transaction) => {
+          if (myaccount == "*" || myaccount == tx.from || myaccount == tx.to) {
+            history.push({
+              timeStamp: block.timestamp,
+              hash: tx.hash,
+              nonce: tx.nonce,
+              blockHash: tx.blockHash,
+              transactionIndex: tx.transactionIndex,
+              from: tx.from,
+              to: tx.to,
+              value: tx.value,
+              gas: tx.gas,
+              gasPrice: tx.gasPrice,
+            });
+          }
+        });
+      }
+    }
+    return history;
+  };
+
+  const getTransactionHistory = useCallback(async () => {
+    const { account, web3 } = web3Api;
+    const history = getTransactionsByAccount(
+      account,
+      MIN_BLOCK_NUMBER,
+      MAX_BLOCK_NUMBER,
+      web3.eth
+    );
+    return history;
+  }, [web3Api]);
+
   const initWeb3 = async () => {
     await checkMetamaskProvider();
     try {
@@ -182,9 +236,11 @@ const Web3Provider: React.FC<Web3ProviderProps> = ({
       );
       const contract = await loadContract("NftMarket", provider);
       const account = await getAccounts(provider);
+      const web3 = new Web3(window.ethereum as any);
 
       setWeb3Api({
         ethereum,
+        web3,
         provider,
         contract: contract as unknown as NftMarketContract,
         account,
@@ -223,6 +279,8 @@ const Web3Provider: React.FC<Web3ProviderProps> = ({
         buyNft,
         saleNft,
         createNft,
+        getBalance,
+        getTransactionHistory,
       }}
     >
       {children}

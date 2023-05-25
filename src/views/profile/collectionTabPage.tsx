@@ -13,7 +13,7 @@ const ProfileCollection = ({
   saleNft = { saleNft },
 }: ProfileCollectionProps) => {
   return (
-    <Box sx={{ mt: 5 }}>
+    <Box>
       <Grid
         container
         spacing={{ xs: 2, md: 4 }}

@@ -11,17 +11,12 @@ import {
 import useStyles from "./style";
 import { Nft } from "@/types/nft";
 import IconChip from "./iconChip";
+import { stringAvatar } from "../../../utils/misc";
 
 type MainCardProps = {
   nft: Nft;
   buyNftFn: () => void;
 };
-
-function stringAvatar(name: string) {
-  return {
-    children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
-  };
-}
 
 const MainCard = ({ nft, cta }: MainCardProps) => {
   const { classes } = useStyles();

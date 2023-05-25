@@ -20,16 +20,14 @@ const useAssetForm = (createNft, user) => {
 
   const uploadImage = async (file: File) => {
     const formData = new FormData();
+    const cloudinaryUrl = process.env.NEXT_PUBLIC_CLOUDINARY_URL;
     formData.append("file", file);
     formData.append("upload_preset", "r3pwmaqy");
     try {
-      const res = await fetch(
-        `https://api.cloudinary.com/v1_1/dgkjzoae8/image/upload`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const res = await fetch(cloudinaryUrl as string, {
+        method: "POST",
+        body: formData,
+      });
       const data = await res.json();
       return data.secure_url;
     } catch (error) {

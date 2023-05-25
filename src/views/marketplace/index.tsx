@@ -1,7 +1,7 @@
 import NftCard from "./nftCard";
 import Box from "@mui/material/Box";
 import { Nft } from "@/types/nft";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import { Key } from "react";
 
 type MarketplaceProps = {
@@ -11,7 +11,7 @@ type MarketplaceProps = {
 
 const Marketplace = ({ nfts, buyNft }: MarketplaceProps) => {
   return (
-    <Box sx={{ mt: 5 }}>
+    <Box sx={{ mt: 2 }}>
       <Grid
         container
         spacing={{ xs: 2, md: 4 }}

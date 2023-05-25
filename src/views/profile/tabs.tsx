@@ -3,7 +3,6 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Collection from "./collection";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -55,9 +54,9 @@ export default function BasicTabs({ children }) {
         >
           <Tab label="Collections" {...a11yProps(0)} />
           <Tab label="Profile" {...a11yProps(1)} />
-          <Tab label="Wallet balance" {...a11yProps(2)} />
-          <Tab label="Transfer" {...a11yProps(3)} />
-          <Tab label="Last Transactions" {...a11yProps(4)} />
+          <Tab label="Wallet Balance" {...a11yProps(2)} />
+          <Tab label="Last Transactions" {...a11yProps(3)} />
+          <Tab label="Transfer" {...a11yProps(4)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -67,10 +66,10 @@ export default function BasicTabs({ children }) {
         {children[1]}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        {children[2]}
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Item Three
+        {children[3]}
       </TabPanel>
       <TabPanel value={value} index={4}>
         Item Three
