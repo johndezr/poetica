@@ -11,11 +11,13 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import { UserValues } from "@/types/user";
+import Image from "next/image";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { stringAvatar } from "../../../utils/misc";
+import useStyles from "./style";
 
 // TODO: import better way all the material components
 
@@ -31,6 +33,7 @@ const pages = [
 
 const Header = ({ user, logout }: HeaderProps) => {
   const router = useRouter();
+  const { classes } = useStyles();
   const settings = [
     {
       name: "Profile",
@@ -79,12 +82,19 @@ const Header = ({ user, logout }: HeaderProps) => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link href="/">
+            <Image
+              className={classes.logo}
+              alt="LOGO"
+              width={50}
+              height={50}
+              src="/surfboard.png"
+            />
             <Typography
               variant="h6"
               noWrap
               component="span"
               sx={{
-                mr: 2,
+                mx: 2,
                 fontFamily: "monospace",
                 fontWeight: 800,
                 letterSpacing: ".4rem",
@@ -92,7 +102,7 @@ const Header = ({ user, logout }: HeaderProps) => {
                 textDecoration: "none",
               }}
             >
-              Poetica
+              NSURFT
             </Typography>
           </Link>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -153,11 +163,13 @@ const Header = ({ user, logout }: HeaderProps) => {
             {pages.map((link) => (
               <Link key={link.name} href={link.href}>
                 <Button
+                  className={
+                    router.pathname == link.href ? classes.activeLink : ""
+                  }
                   sx={{
                     my: 2,
                     color: "white",
                     display: "block",
-                    textTransform: "none",
                   }}
                 >
                   {link.name}
@@ -196,11 +208,12 @@ const Header = ({ user, logout }: HeaderProps) => {
                 <>
                   <Link href="/login">
                     <Button
+                      className={
+                        router.pathname == "/login" ? classes.activeLink : ""
+                      }
                       sx={{
                         my: 2,
                         color: "white",
-                        display: "block",
-                        textTransform: "none",
                       }}
                     >
                       Login
@@ -208,11 +221,12 @@ const Header = ({ user, logout }: HeaderProps) => {
                   </Link>
                   <Link href="/signup">
                     <Button
+                      className={
+                        router.pathname == "/signup" ? classes.activeLink : ""
+                      }
                       sx={{
                         my: 2,
                         color: "white",
-                        display: "block",
-                        textTransform: "none",
                       }}
                     >
                       Sign Up
@@ -222,7 +236,7 @@ const Header = ({ user, logout }: HeaderProps) => {
               ) : (
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, ml: 2 }}>
                   <Avatar
-                    {...stringAvatar(`${user.firstName} ${user.lastName}`)}
+                    {...stringAvatar(`${user?.firstName} ${user?.lastName}`)}
                   />
                 </IconButton>
               )}

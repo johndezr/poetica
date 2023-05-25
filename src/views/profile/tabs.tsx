@@ -45,35 +45,21 @@ export default function BasicTabs({ children }) {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          <Tab label="Collections" {...a11yProps(0)} />
-          <Tab label="Profile" {...a11yProps(1)} />
-          <Tab label="Wallet Balance" {...a11yProps(2)} />
-          <Tab label="Last Transactions" {...a11yProps(3)} />
-          <Tab label="Transfer" {...a11yProps(4)} />
-        </Tabs>
-      </Box>
-      <TabPanel value={value} index={0}>
-        {children[0]}
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        {children[1]}
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        {children[2]}
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        {children[3]}
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-        Item Three
-      </TabPanel>
+    <Box>
+      <Tabs value={value} onChange={handleChange} aria-label="profile tabs">
+        <Tab label="Collections" {...a11yProps(0)} />
+        <Tab label="Profile" {...a11yProps(1)} />
+        <Tab label="Wallet Balance" {...a11yProps(2)} />
+        <Tab label="Last Transactions" {...a11yProps(3)} />
+        <Tab label="Send ETH" {...a11yProps(4)} />
+      </Tabs>
+      {children.map((child, index: number) => {
+        return (
+          <TabPanel key={index} value={value} index={index}>
+            {child}
+          </TabPanel>
+        );
+      })}
     </Box>
   );
 }

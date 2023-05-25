@@ -26,6 +26,11 @@ const useStyles = makeStyles()((theme) => {
       alignItems: "center",
       padding: theme.spacing(0, 1, 1, 1),
     },
+    divider: {
+      backgroundColor: "hsl(0, 0%, 100%)",
+      opacity: 0.7,
+      marginBottom: ".6rem",
+    },
   };
 });
 

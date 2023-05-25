@@ -17,6 +17,7 @@ const Profile = ({ user }: { user: UserValues }) => {
     saleNft,
     getBalance,
     getTransactionHistory,
+    sendPayment,
   } = useWeb3();
   const [nfts, setNfts] = useState<Nft[]>([]);
   const [balance, setBalance] = useState<number>(0);
@@ -55,6 +56,7 @@ const Profile = ({ user }: { user: UserValues }) => {
       nfts={nfts}
       balance={balance}
       transactions={transactions}
+      sendPayment={sendPayment}
     ></ProfileView>
   );
 };

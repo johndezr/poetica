@@ -1,13 +1,5 @@
-const palette =  {
-  primary: {
-    main: "#556cd6",
-  },
-  secondary: {
-    main: "#19857b",
-  },
-  error: {
-    main: "#ED0530",
-  },
-}
+const palette = {
+  mode: "dark",
+};
 
 export default palette;

@@ -9,8 +9,14 @@ import { Nft } from "../types/nft";
 import Web3 from "web3";
 import { Transaction } from "../types/transaction";
 
+type Web3ProviderProps = {
+  children: React.ReactNode;
+};
+
 const MIN_BLOCK_NUMBER = 0;
 const MAX_BLOCK_NUMBER = 20;
+const NETWORK_ID = process.env.NEXT_PUBLIC_NETWORK_ID;
+const Web3Context = createContext<Web3State>(createDefaultState());
 
 function createDefaultState(): Web3State {
   return {
@@ -23,8 +29,6 @@ function createDefaultState(): Web3State {
     isWalletConnected: false,
   };
 }
-
-const NETWORK_ID = process.env.NEXT_PUBLIC_NETWORK_ID;
 
 export const loadContract = async (
   name: string,
@@ -53,21 +57,34 @@ export const loadContract = async (
   }
 };
 
-const Web3Context = createContext<Web3State>(createDefaultState());
-
-type Web3ProviderProps = {
-  children: React.ReactNode;
-};
-
 const Web3Provider: React.FC<Web3ProviderProps> = ({
   children,
 }: Web3ProviderProps) => {
+  // TODO: create helper file for divide the functions
+
   const [web3Api, setWeb3Api] = useState<Web3State>(createDefaultState());
 
   const getAccounts = async (provider) => {
     const accounts = await provider.listAccounts();
     const account = accounts[0];
     return account;
+  };
+
+  const handleListNfts = async (coreNfts: NftCore[], contract: Contract) => {
+    const nfts = [];
+    for (let i = 0; i < coreNfts?.length; i++) {
+      const item = coreNfts[i];
+      const tokenURI = await contract!.tokenURI(item.tokenId);
+
+      nfts.push({
+        price: parseFloat(ethers.utils.formatEther(item.price)),
+        tokenId: Number(item.tokenId),
+        creator: item.creator,
+        isListed: item.isListed,
+        image: tokenURI,
+      });
+    }
+    return nfts;
   };
 
   const listNfts = useCallback(async () => {
@@ -84,23 +101,6 @@ const Web3Provider: React.FC<Web3ProviderProps> = ({
     const nfts = await handleListNfts(coreNfts, contract);
     return nfts;
   }, [web3Api]);
-
-  async function handleListNfts(coreNfts: NftCore[], contract: Contract) {
-    const nfts = [];
-    for (let i = 0; i < coreNfts?.length; i++) {
-      const item = coreNfts[i];
-      const tokenURI = await contract!.tokenURI(item.tokenId);
-
-      nfts.push({
-        price: parseFloat(ethers.utils.formatEther(item.price)),
-        tokenId: Number(item.tokenId),
-        creator: item.creator,
-        isListed: item.isListed,
-        image: tokenURI,
-      });
-    }
-    return nfts;
-  }
 
   const buyNft = useCallback(
     async (tokenId: number, value: number) => {
@@ -227,6 +227,29 @@ const Web3Provider: React.FC<Web3ProviderProps> = ({
     return history;
   }, [web3Api]);
 
+  const sendPayment = useCallback(
+    async (to: string, ether: number) => {
+      const { account, provider } = web3Api;
+      const signer = provider.getSigner();
+      ethers.utils.getAddress(account);
+      setWeb3Api((api) => ({ ...api, isLoading: true }));
+      try {
+        const transaction = await signer.sendTransaction({
+          to,
+          value: ethers.utils.parseEther(ether.toString()),
+        });
+        await transaction.wait();
+        setWeb3Api((api) => ({ ...api, isLoading: false }));
+        alert("You have sent payment.");
+      } catch (e: any) {
+        alert(e.message);
+      } finally {
+        setWeb3Api((api) => ({ ...api, isLoading: false }));
+      }
+    },
+    [web3Api]
+  );
+
   const initWeb3 = async () => {
     await checkMetamaskProvider();
     try {
@@ -281,6 +304,7 @@ const Web3Provider: React.FC<Web3ProviderProps> = ({
         createNft,
         getBalance,
         getTransactionHistory,
+        sendPayment,
       }}
     >
       {children}

@@ -50,21 +50,10 @@ const MainCard = ({ nft, cta }: MainCardProps) => {
       </CardActions>
       {nft.owned && (
         <>
-          <Divider
-            variant="middle"
-            style={{
-              backgroundColor: "hsl(0, 0%, 100%)",
-              opacity: 0.7,
-              marginBottom: ".6rem",
-            }}
-          />
+          <Divider variant="middle" className={classes.divider} />
           <Box className={classes.ownerBox}>
             <Avatar {...stringAvatar(nft.owned)} />
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              style={{ marginLeft: ".5rem" }}
-            >
+            <Typography variant="body2" color="text.secondary" sx={{ ml: 0.5 }}>
               {nft.owned}
             </Typography>
           </Box>

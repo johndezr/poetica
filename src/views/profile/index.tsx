@@ -5,14 +5,16 @@ import { UserValues } from "@/types/user";
 import { Box } from "@mui/material";
 import TransactionsTabPage from "./transactionsTabPage";
 import { Transaction } from "@/types/transaction";
+import SendEthTabPage from "./sendEthTabPage";
 
 type ProfileViewProps = {
   nfts: Nft[];
   user: UserValues;
-  isWalletConnected: boolean;
-  saleNft: (id: number, price: number) => void;
-  balance: number;
   transactions: Transaction[];
+  isWalletConnected: boolean;
+  balance: number;
+  saleNft: (id: number, price: number) => void;
+  sendPayment: (to: string, ether: number) => void;
 };
 
 const ProfileView = ({
@@ -22,6 +24,7 @@ const ProfileView = ({
   saleNft,
   balance,
   transactions,
+  sendPayment,
 }: ProfileViewProps) => {
   return (
     <>
@@ -40,6 +43,7 @@ const ProfileView = ({
           <h2>Balance: {balance} - ETH</h2>
         </Box>
         <TransactionsTabPage transactions={transactions} />
+        <SendEthTabPage sendPayment={sendPayment} />
       </BasicTabs>
     </>
   );

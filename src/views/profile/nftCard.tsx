@@ -9,7 +9,7 @@ type NftCardProps = {
 };
 
 const NftCard = ({ nft, saleNft }: NftCardProps) => {
-  const { price, tokenId, isListed } = nft;
+  const { price, tokenId, isListed, image } = nft;
 
   const onSaleNtf = () => {
     saleNft(tokenId, price);
@@ -18,11 +18,16 @@ const NftCard = ({ nft, saleNft }: NftCardProps) => {
   const buttonCta = () => {
     return (
       <>
-        <Button variant="contained" size="small">
+        <Button
+          href={image}
+          target="_blank"
+          download={image}
+          variant="contained"
+        >
           Download image
         </Button>
         {!isListed ? (
-          <Button onClick={onSaleNtf} variant="outlined">
+          <Button onClick={onSaleNtf} variant="contained">
             {!isListed ? "Sale" : "Unsale"}
           </Button>
         ) : (
@@ -32,7 +37,7 @@ const NftCard = ({ nft, saleNft }: NftCardProps) => {
     );
   };
 
-  return <MainCard nft={nft} cta={buttonCta}></MainCard>;
+  return <MainCard nft={nft} cta={buttonCta()}></MainCard>;
 };
 
 export default NftCard;

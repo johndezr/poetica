@@ -24,15 +24,7 @@ const IconChip = ({
 }: IconChipProps) => {
   return (
     <Stack direction="row" alignItems="center">
-      <Image
-        src={`/${imgSrc}`}
-        alt={imgSrc}
-        width={width}
-        height={height}
-        style={{
-          marginRight: "5px",
-        }}
-      />
+      <Image src={`/${imgSrc}`} alt={imgSrc} width={width} height={height} />
       <p style={textStyles}>{text}</p>
     </Stack>
   );

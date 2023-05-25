@@ -1,5 +1,5 @@
 import { Nft } from "../src/types/nft";
-import poemsArrMockup from "../mockups/poems.json";
+import nftsArrMockup from "../mockups/nfts.json";
 
 export const getNtfsMatchMockup = (nfts: Nft[]) => {
   const nftsLocalStorage = JSON.parse(localStorage.getItem("nfts") || "[]");
@@ -39,6 +39,6 @@ export const saveNftInLocalStorage = (nft: Nft) => {
 export const injectNftsLocalStorage = () => {
   const areNftsInLocalStorage = localStorage.getItem("nfts") || [];
   if (!areNftsInLocalStorage) {
-    localStorage.setItem("nfts", JSON.stringify(poemsArrMockup));
+    localStorage.setItem("nfts", JSON.stringify(nftsArrMockup));
   }
 };
