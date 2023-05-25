@@ -1,26 +1,24 @@
 import { Card, Stack } from "@mui/material";
 import Button from "@mui/material/Button";
-import { Poem } from "@/types/poem";
+import { Nft } from "@/types/nft";
 import CardText from "../../components/nftCard/cardText";
 import CardImage from "../../components/nftCard/cardImage";
+import MainCard from "../../components/nftCard/index";
 // TODO: fix css styles here, move to a separate file
 
-type NftPoem = {
-  poem: Poem;
+type NftCardProps = {
+  nft: Nft;
+  buyNft: (id: number, value: number) => void;
 };
 
-const NftCard = ({ poem }: NftPoem) => {
-  const { image, title, description, price, daysLeft, creator } = poem;
+const NftCard = ({ nft, buyNft }: NftCardProps) => {
+  const { image, title, description, price, daysLeft, creator, tokenId } = nft;
+  const buyNftFn = () => {
+    buyNft(tokenId, Number(price));
+  };
+
   return (
-    <Card
-      sx={{
-        bgcolor: "hsl(216, 50%, 16%)",
-        width: "350px",
-        height: "550px",
-        borderRadius: "1rem",
-        padding: "1rem",
-      }}
-    >
+    <MainCard>
       <Stack alignItems="center">
         <CardImage image={image} />
         <CardText
@@ -30,13 +28,13 @@ const NftCard = ({ poem }: NftPoem) => {
           description={description}
           price={price}
           cta={
-            <Button variant="contained" size="small">
+            <Button onClick={buyNftFn} variant="outlined" size="small">
               Buy
             </Button>
           }
         />
       </Stack>
-    </Card>
+    </MainCard>
   );
 };
 

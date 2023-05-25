@@ -1,20 +1,26 @@
-import { Poem } from "@/types/poem";
+import { Nft } from "@/types/nft";
 import ProfileCollection from "./collection";
 import ProfileTabView from "./profile";
 import BasicTabs from "./tabs";
 import { UserValues } from "@/types/user";
 
 type ProfileViewProps = {
-  poems: Poem[];
+  nfts: Nft[];
   user: UserValues;
   isWalletConnected: boolean;
+  saleNft: (id: number, price: number) => void;
 };
 
-const ProfileView = ({ poems, user, isWalletConnected }: ProfileViewProps) => {
+const ProfileView = ({
+  nfts,
+  user,
+  isWalletConnected,
+  saleNft,
+}: ProfileViewProps) => {
   return (
     <>
       <BasicTabs>
-        <ProfileCollection poems={poems} />
+        <ProfileCollection saleNft={saleNft} nfts={nfts} />
         <ProfileTabView user={user} isWalletConnected={isWalletConnected} />
       </BasicTabs>
     </>

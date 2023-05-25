@@ -5,3 +5,9 @@ export type NftCore = {
   isListed: boolean;
   image: string;
 };
+
+export type Nft = NftCore & {
+  title: string;
+  description: string;
+  daysLeft: string;
+};

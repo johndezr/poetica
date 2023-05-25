@@ -3,7 +3,7 @@ import { withUserContext } from "../../src/contexts/UserStorage";
 import { UserValues } from "../../src/types/user";
 import ProfileView from "@/views/profile";
 import { useWeb3 } from "@/contexts/Web3";
-import { Poem } from "@/types/poem";
+import { Nft } from "@/types/nft";
 import { useState, useEffect } from "react";
 import { getNtfsMatchMockup } from "../../utils/nft";
 
@@ -13,16 +13,18 @@ const Profile = ({ user }: { user: UserValues }) => {
   const {
     web3Api: { isWalletConnected },
     getOwnListNfts,
+    saleNft,
   } = useWeb3();
-  const [poems, setPoems] = useState<Poem[] | undefined>([]);
+  const [nfts, setNfts] = useState<Nft[] | undefined>([]);
 
   useEffect(() => {
     (async () => {
       const nfts = await getOwnListNfts();
+      console.log(nfts);
       const matchedNtfsArr = getNtfsMatchMockup(nfts);
-      setPoems(matchedNtfsArr);
+      setNfts(matchedNtfsArr);
     })();
-  }, []);
+  }, [getOwnListNfts]);
 
   if (!isReady) {
     return <></>;
@@ -40,7 +42,8 @@ const Profile = ({ user }: { user: UserValues }) => {
     <ProfileView
       isWalletConnected={isWalletConnected}
       user={user}
-      poems={poems}
+      nfts={nfts}
+      saleNft={saleNft}
     ></ProfileView>
   );
 };

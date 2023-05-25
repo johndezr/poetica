@@ -1,22 +1,23 @@
 import type { NextPage } from "next";
 import MarketplaceView from "@/views/marketplace";
-import { Poem } from "../src/types/poem";
+import { Nft } from "../src/types/nft";
 import { useState, useEffect } from "react";
 import { useWeb3 } from "@/contexts/Web3";
 import { getNtfsMatchMockup } from "../utils/nft";
 
 const Marketplace: NextPage = () => {
-  const { listNfts } = useWeb3();
-  const [poems, setPoems] = useState<Poem[]>([]);
+  const { listNfts, buyNft } = useWeb3();
+  const [nfts, setNfts] = useState<Nft[]>([]);
   useEffect(() => {
     (async () => {
       const nfts = await listNfts();
       const matchedNtfsArr = getNtfsMatchMockup(nfts);
-      setPoems(matchedNtfsArr);
+      console.log(matchedNtfsArr);
+      setNfts(matchedNtfsArr);
     })();
   }, [listNfts]);
 
-  return <MarketplaceView poems={poems} />;
+  return <MarketplaceView buyNft={buyNft} nfts={nfts} />;
 };
 
 export default Marketplace;

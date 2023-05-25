@@ -9,7 +9,7 @@ export const getNtfsMatchMockup = (nfts: Poem[]) => {
         return {
           ...poem,
           ...{
-            tokenID: nft?.tokenId,
+            tokenId: nft?.tokenId,
             price: nft?.price,
             isListed: nft?.isListed,
             creatorAddress: nft?.creator,

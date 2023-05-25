@@ -1,7 +1,11 @@
-import { Poem } from "@/types/poem";
+import { Nft } from "@/types/nft";
 import { Stack, Box, Divider, Avatar } from "@mui/material";
 import IconChip from "./iconChip";
 import useStyles from "./style";
+
+type CardTextProps = Nft & {
+  cta: React.ReactNode;
+};
 
 const CardText = ({
   title,
@@ -10,7 +14,7 @@ const CardText = ({
   daysLeft,
   creator,
   cta,
-}: Poem) => {
+}: CardTextProps) => {
   const { classes } = useStyles();
   return (
     <Stack
@@ -35,7 +39,6 @@ const CardText = ({
               width={10}
               height={18}
               textStyles={{
-                color: "hsl(178, 100%, 50%)",
                 fontWeight: "400",
                 fontSize: "14px",
                 marginRight: "10px",

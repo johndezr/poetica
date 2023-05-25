@@ -17,6 +17,9 @@ const defaultTheme = createTheme({
   palette,
   typography: {
     fontFamily: inter.style.fontFamily,
+    button: {
+      textTransform: "none",
+    },
   },
   breakpoints,
   components: {

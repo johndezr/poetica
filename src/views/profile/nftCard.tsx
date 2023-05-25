@@ -1,45 +1,46 @@
-import { Card, Stack } from "@mui/material";
 import Button from "@mui/material/Button";
-import { Poem } from "@/types/poem";
+import { Nft } from "@/types/nft";
 import CardText from "../../components/nftCard/cardText";
 import CardImage from "../../components/nftCard/cardImage";
+import MainCard from "../../components/nftCard";
+import Chip from "@mui/material/Chip";
 // TODO: fix css styles here, move to a separate file
 
-type NftPoem = {
-  poem: Poem;
+type NftCardProps = {
+  nft: Nft;
+  saleNft: (id: number, price: number) => void;
 };
 
-const NftCard = ({ poem }: NftPoem) => {
-  const { image, title, description, price, creator } = poem;
+const NftCard = ({ nft, saleNft }: NftCardProps) => {
+  const { image, title, description, price, creator, tokenId, isListed } = nft;
+
+  const onSaleNtf = () => {
+    saleNft(tokenId, price);
+  };
+
   return (
-    <Card
-      sx={{
-        bgcolor: "hsl(216, 50%, 16%)",
-        width: "350px",
-        height: "550px",
-        borderRadius: "1rem",
-        padding: "1rem",
-      }}
-    >
-      <Stack alignItems="center">
-        <CardImage image={image} />
-        <CardText
-          creator={creator}
-          title={title}
-          description={description}
-          cta={
-            <>
-              <Button variant="contained" size="small">
-                Download image
+    <MainCard>
+      <CardImage image={image} />
+      <CardText
+        creator={creator}
+        title={title}
+        description={description}
+        cta={
+          <>
+            <Button variant="contained" size="small">
+              Download image
+            </Button>
+            {!isListed ? (
+              <Button onClick={onSaleNtf} variant="outlined" size="small">
+                {!isListed ? "Sale" : "Unsale"}
               </Button>
-              <Button variant="contained" size="small">
-                Tranfer
-              </Button>
-            </>
-          }
-        />
-      </Stack>
-    </Card>
+            ) : (
+              <Chip label="On Sale" variant="outlined" />
+            )}
+          </>
+        }
+      />
+    </MainCard>
   );
 };
 

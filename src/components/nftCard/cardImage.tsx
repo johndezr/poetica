@@ -1,30 +1,21 @@
-import { CardMedia } from "@mui/material";
+import { Box, CardMedia } from "@mui/material";
+import useStyles from "./style";
 
 type CardImageProps = {
   image: string;
 };
 
 const CardImage = ({ image }: CardImageProps) => {
+  const { classes } = useStyles();
   return (
-    <div
-      style={{
-        position: "relative",
-        width: "100%",
-        height: "300px",
-      }}
-    >
+    <Box className={classes.cardImage}>
       <CardMedia
         component="img"
         image={image}
         alt="equilibrium"
-        sx={{
-          height: "300px",
-          width: "100%",
-          objectFit: "cover",
-          borderRadius: ".2rem",
-        }}
+        className={classes.cardMedia}
       />
-    </div>
+    </Box>
   );
 };
 

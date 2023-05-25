@@ -4,6 +4,7 @@ import {
   useContext,
   useEffect,
   useState,
+  useCallback,
 } from "react";
 import { Web3State } from "../types/web3";
 import { Contract, ethers, providers } from "ethers";
@@ -76,7 +77,8 @@ const Web3Provider: React.FC<Web3ProviderProps> = ({
   //   });
   // }
 
-  const listNfts = async () => {
+  // TODO: refctor this function and getOwnListNfts
+  const listNfts = useCallback(async () => {
     const { contract } = web3Api;
     const nfts = [] as NftCore[];
     const coreNfts =
@@ -95,9 +97,49 @@ const Web3Provider: React.FC<Web3ProviderProps> = ({
       });
     }
     return nfts;
-  };
+  }, [web3Api]);
 
-  const getOwnListNfts = async () => {
+  const buyNft = useCallback(
+    async (tokenId: number, value: number) => {
+      const { contract } = web3Api;
+      setWeb3Api((api) => ({ ...api, isLoading: true }));
+      try {
+        const result = await contract?.buyNft(tokenId, {
+          value: ethers.utils.parseEther(value.toString()),
+        });
+        await result?.wait();
+        setWeb3Api((api) => ({ ...api, isLoading: false }));
+        alert("You have bought Nft. See profile page.");
+      } catch (e: any) {
+        console.error(e.message);
+      }
+    },
+    [web3Api]
+  );
+
+  const saleNft = useCallback(
+    async (tokenId: number, value: number) => {
+      const { contract } = web3Api;
+      setWeb3Api((api) => ({ ...api, isLoading: true }));
+      try {
+        const result = await contract?.placeNftOnSale(
+          tokenId,
+          ethers.utils.parseEther(value.toString()),
+          {
+            value: ethers.utils.parseEther((0.025).toString()),
+          }
+        );
+        await result?.wait();
+        setWeb3Api((api) => ({ ...api, isLoading: false }));
+        alert("You have sold Nft. See marketplace.");
+      } catch (e: any) {
+        console.error(e.message);
+      }
+    },
+    [web3Api]
+  );
+
+  const getOwnListNfts = useCallback(async () => {
     const { contract } = web3Api;
     const nfts = [] as NftCore[];
     const coreNfts = (await contract?.getOwnedNfts()) as unknown as NftCore[];
@@ -115,7 +157,7 @@ const Web3Provider: React.FC<Web3ProviderProps> = ({
       });
     }
     return nfts;
-  };
+  }, [web3Api]);
 
   const initWeb3 = async () => {
     await checkMetamaskProvider();
@@ -162,7 +204,14 @@ const Web3Provider: React.FC<Web3ProviderProps> = ({
 
   return (
     <Web3Context.Provider
-      value={{ web3Api, initWeb3, listNfts, getOwnListNfts }}
+      value={{
+        web3Api,
+        initWeb3,
+        listNfts,
+        getOwnListNfts,
+        buyNft,
+        saleNft,
+      }}
     >
       {children}
     </Web3Context.Provider>
