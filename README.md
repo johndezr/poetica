@@ -1,4 +1,7 @@
 This is a NFT Marketplace built in [Next.js](https://nextjs.org/)
+Overview:
+
+<https://www.loom.com/share/65793d750c5e4b918a0fc4b699f8b32e>
 
 ## Getting Started
 

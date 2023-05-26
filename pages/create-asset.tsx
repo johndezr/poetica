@@ -5,13 +5,15 @@ import { withUserContext } from "../src/contexts/UserStorage";
 import { UserValues } from "../src/types/user";
 import { useRouter } from "next/router";
 import { useWeb3 } from "../src/contexts/Web3";
+import { useEffect } from "react";
+import { getStorageValue } from "../utils/storage";
 
 type CreateAssetProps = {
   user: UserValues;
 };
 
 const CreateAsset = ({ user }: CreateAssetProps) => {
-  const { createNft } = useWeb3();
+  const { createNft, web3Api } = useWeb3();
   const { handleSubmit, handleFileChange, fileValue } = useAssetForm({
     createNft,
     user,
@@ -19,9 +21,11 @@ const CreateAsset = ({ user }: CreateAssetProps) => {
   const formProps = { handleSubmit, handleFileChange, fileValue };
   const router = useRouter();
 
-  if (!user || !user.email) {
-    router.push("/login?redirect=create-asset");
-  }
+  useEffect(() => {
+    if (!getStorageValue("userId").length) {
+      router.push("/login?redirect=create-asset");
+    }
+  }, []);
 
   return <CreateAssetView formProps={formProps} />;
 };
