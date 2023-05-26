@@ -24,7 +24,7 @@ const NftCard = ({ nft, saleNft }: NftCardProps) => {
           download={image}
           variant="contained"
         >
-          Download image
+          Download
         </Button>
         {!isListed ? (
           <Button onClick={onSaleNtf} variant="contained">

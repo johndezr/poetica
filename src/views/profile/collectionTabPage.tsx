@@ -9,10 +9,7 @@ type ProfileCollectionProps = {
   saleNft: (id: number, price: number) => void;
 };
 
-const CollectionTabPage = ({
-  nfts,
-  saleNft = { saleNft },
-}: ProfileCollectionProps) => {
+const CollectionTabPage = ({ nfts, saleNft }: ProfileCollectionProps) => {
   return (
     <Box>
       {nfts.length === 0 && (

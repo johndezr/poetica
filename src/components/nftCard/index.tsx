@@ -15,7 +15,7 @@ import { stringAvatar } from "../../../utils/misc";
 
 type MainCardProps = {
   nft: Nft;
-  buyNftFn: () => void;
+  cta: React.ReactNode;
 };
 
 const MainCard = ({ nft, cta }: MainCardProps) => {

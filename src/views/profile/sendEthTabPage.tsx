@@ -54,7 +54,6 @@ const SendEthTabPage = ({
             fullWidth
             name="amount"
             label="Amount in ETH"
-            type="number"
             id="amount"
             autoComplete="amount"
           />

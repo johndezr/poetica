@@ -1,6 +1,8 @@
 import { MetaMaskInpageProvider } from "@metamask/providers";
-import { Contract, providers } from "ethers";
+import { providers } from "ethers";
 import { NftMarketContract } from "./nftMarketContract";
+import { Nft } from "./nft";
+import { Transaction } from "./transaction";
 
 declare global {
   interface Window {
@@ -13,10 +15,24 @@ export type Web3Params = {
   provider: providers.Web3Provider | null;
   contract: NftMarketContract | null;
   account: string | null;
-};
-
-export type Web3State = {
   isLoading: boolean;
   isWalletConnected: boolean;
   isInstalled: boolean;
-} & Web3Params;
+  isInitialized: boolean;
+};
+
+export type Web3Functions = {
+  getOwnListNfts: () => Promise<Nft[]>;
+  saleNft: (tokenId: number, value: number) => Promise<void>;
+  getBalance: () => Promise<string>;
+  getTransactionHistory: () => Promise<Transaction[]>;
+  sendPayment: (to: string, ether: number) => Promise<void>;
+  createNft: (nftUri: string, price: string, nftMetaInfo: Nft) => Promise<void>;
+  buyNft: () => Promise<void>;
+  listNfts: () => Promise<Nft[]>;
+  initWeb3: () => null;
+};
+
+export type Web3State = {
+  web3Api: Web3Params;
+} & Web3Functions;

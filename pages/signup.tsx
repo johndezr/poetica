@@ -19,7 +19,7 @@ const SignUp = ({ updateUser }: SignUpProps) => {
     handleSubmit,
     emailValue,
     userAlreadyExist,
-  } = useSignupForm(updateUser, account);
+  } = useSignupForm(updateUser, account as string);
 
   const formProps = {
     handleEmailChange,

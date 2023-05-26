@@ -22,6 +22,7 @@ const Layout: React.FC<LayoutProps> = ({ children, user, logout }) => {
       initWeb3();
       injectNftsLocalStorage();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (web3Api.isLoading) {

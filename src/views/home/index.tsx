@@ -25,8 +25,8 @@ const HomeView = () => {
         <Grid item xs={12} md={5}>
           <Image
             className={classes.img}
-            width={400}
-            height={400}
+            width={350}
+            height={350}
             alt="home-nft"
             src={"/home-nft.gif"}
           />

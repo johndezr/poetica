@@ -10,7 +10,12 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const UserAuthAlert = ({ userAlreadyExist, text }) => {
+type UserAuthAlertProps = {
+  userAlreadyExist: boolean;
+  text: string;
+};
+
+const UserAuthAlert = ({ userAlreadyExist, text }: UserAuthAlertProps) => {
   const [openAlert, setOpenAlert] = React.useState(false);
   const handleClose = (
     event?: React.SyntheticEvent | Event,

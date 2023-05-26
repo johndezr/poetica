@@ -12,10 +12,10 @@ type CreateAssetProps = {
 
 const CreateAsset = ({ user }: CreateAssetProps) => {
   const { createNft } = useWeb3();
-  const { handleSubmit, handleFileChange, fileValue } = useAssetForm(
+  const { handleSubmit, handleFileChange, fileValue } = useAssetForm({
     createNft,
-    user
-  );
+    user,
+  });
   const formProps = { handleSubmit, handleFileChange, fileValue };
   const router = useRouter();
 

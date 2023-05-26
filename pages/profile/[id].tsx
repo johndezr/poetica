@@ -20,7 +20,7 @@ const Profile = ({ user }: { user: UserValues }) => {
     sendPayment,
   } = useWeb3();
   const [nfts, setNfts] = useState<Nft[]>([]);
-  const [balance, setBalance] = useState<number>(0);
+  const [balance, setBalance] = useState<string | number>();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   useEffect(() => {
@@ -34,6 +34,7 @@ const Profile = ({ user }: { user: UserValues }) => {
       setBalance(walletBalance);
       setTransactions(transactionHistory);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!isReady) {
@@ -54,7 +55,7 @@ const Profile = ({ user }: { user: UserValues }) => {
       user={user}
       saleNft={saleNft}
       nfts={nfts}
-      balance={balance}
+      balance={balance as number}
       transactions={transactions}
       sendPayment={sendPayment}
     ></ProfileView>

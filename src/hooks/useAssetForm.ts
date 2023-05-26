@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { useRouter } from "next/router";
 
-const useAssetForm = (createNft, user) => {
-  const router = useRouter();
+type useAssetFormProps = {
+  createNft: (url: string, price: string, metadata: any) => void;
+  user: any;
+};
 
+const useAssetForm = ({ createNft, user }: useAssetFormProps) => {
   const [values, setValues] = useState({
     name: "",
     description: "",
@@ -31,7 +33,7 @@ const useAssetForm = (createNft, user) => {
       const data = await res.json();
       return data.secure_url;
     } catch (error) {
-      alert("Error uploading image", error.message);
+      alert(`Error uploading image ${error}`);
     }
   };
 

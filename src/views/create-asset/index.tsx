@@ -63,7 +63,6 @@ const CreateAssetView = ({ formProps }: CreateAssetViewProps) => {
             required
             fullWidth
             name="price"
-            type="number"
             label="Price"
             id="price"
             autoComplete="price"

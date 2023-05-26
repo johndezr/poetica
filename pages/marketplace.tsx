@@ -8,17 +8,25 @@ import { getNtfsMatchMockup } from "../utils/nft";
 const Marketplace: NextPage = () => {
   const { listNfts, buyNft, web3Api } = useWeb3();
   const [nfts, setNfts] = useState<Nft[]>([]);
+  const [areNftsAvaliable, setAreNftsAvaliable] = useState<Boolean>(false);
 
   useEffect(() => {
     (async () => {
       const nfts = await listNfts();
+      nfts.length > 0 ? setAreNftsAvaliable(true) : setAreNftsAvaliable(false);
       const matchedNtfsArr = getNtfsMatchMockup(nfts);
       setNfts(matchedNtfsArr);
     })();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [web3Api]);
 
   return (
-    <MarketplaceView account={web3Api.account} buyNft={buyNft} nfts={nfts} />
+    <MarketplaceView
+      areNftsAvaliable={areNftsAvaliable}
+      account={web3Api.account as string}
+      buyNft={buyNft}
+      nfts={nfts}
+    />
   );
 };
 

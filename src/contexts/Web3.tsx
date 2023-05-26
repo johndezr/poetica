@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useCallback } from "react";
-import { Web3State } from "../types/web3";
+import { Web3State, Web3Functions } from "../types/web3";
 import { Contract, ethers, providers } from "ethers";
 import detectEthereumProvider from "@metamask/detect-provider";
 import { NftCore } from "../types/nft";
@@ -20,17 +20,27 @@ const Web3Context = createContext<Web3State>(createDefaultState());
 
 function createDefaultState(): Web3State {
   return {
-    ethereum: null,
-    provider: null,
-    contract: null,
-    isLoading: true,
-    isInstalled: false,
-    account: null,
-    isWalletConnected: false,
+    web3Api: {
+      ethereum: null,
+      provider: null,
+      contract: null,
+      isLoading: true,
+      isInstalled: false,
+      account: null,
+      isWalletConnected: false,
+    },
+    getOwnListNfts: () => [] as Nft[],
+    listNfts: () => [] as Nft[],
+    saleNft: () => null,
+    getBalance: () => "",
+    getTransactionHistory: () => [] as Transaction[],
+    sendPayment: () => null,
+    createNft: () => null,
+    buyNft: () => null,
   };
 }
 
-export const loadContract = async (
+const loadContract = async (
   name: string,
   provider: providers.Web3Provider
 ): Promise<Contract> => {
@@ -64,7 +74,7 @@ const Web3Provider: React.FC<Web3ProviderProps> = ({
 
   const [web3Api, setWeb3Api] = useState<Web3State>(createDefaultState());
 
-  const getAccounts = async (provider) => {
+  const getAccounts = async (provider: providers.Web3Provider) => {
     const accounts = await provider.listAccounts();
     const account = accounts[0];
     return account;

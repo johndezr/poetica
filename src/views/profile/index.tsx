@@ -12,7 +12,7 @@ type ProfileViewProps = {
   user: UserValues;
   transactions: Transaction[];
   isWalletConnected: boolean;
-  balance: number;
+  balance: number | string;
   saleNft: (id: number, price: number) => void;
   sendPayment: (to: string, ether: number) => void;
 };

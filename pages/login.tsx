@@ -23,7 +23,7 @@ const SignIn = ({ updateUser }: SignInProps) => {
     handleSubmit,
     email,
     userAlreadyExist,
-  } = useLoginForm(updateUser, redirect, account);
+  } = useLoginForm(updateUser, redirect, account as string);
 
   const formProps = {
     handleEmailChange,

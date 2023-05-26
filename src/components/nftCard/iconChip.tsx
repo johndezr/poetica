@@ -7,7 +7,7 @@ type IconChipProps = {
   text: string;
   width: number;
   height: number;
-  textStyles: {
+  textStyles?: {
     color: string;
     fontWeight: string;
     fontSize: string;
