@@ -2,6 +2,8 @@ This is a NFT Marketplace built in [Next.js](https://nextjs.org/)
 
 ## Getting Started
 
+Make sure you're connected to the Metamask Wallet
+
 First, install the dependencies server:
 
 ```bash
