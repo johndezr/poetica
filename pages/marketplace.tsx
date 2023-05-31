@@ -13,9 +13,13 @@ const Marketplace: NextPage = () => {
   useEffect(() => {
     (async () => {
       const nfts = await listNfts();
-      nfts.length > 0 ? setAreNftsAvaliable(true) : setAreNftsAvaliable(false);
-      const matchedNtfsArr = getNtfsMatchMockup(nfts);
-      setNfts(matchedNtfsArr);
+      if (nfts?.length > 0) {
+        setAreNftsAvaliable(true);
+        const matchedNtfsArr = getNtfsMatchMockup(nfts);
+        setNfts(matchedNtfsArr);
+      } else {
+        setAreNftsAvaliable(false);
+      }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [web3Api]);

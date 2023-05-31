@@ -99,17 +99,27 @@ const Web3Provider: React.FC<Web3ProviderProps> = ({
 
   const listNfts = useCallback(async () => {
     const { contract } = web3Api;
-    const coreNfts =
-      (await contract?.getAllNftsOnSale()) as unknown as NftCore[];
-    const nfts = await handleListNfts(coreNfts, contract);
-    return nfts;
+    try {
+      const coreNfts =
+        (await contract?.getAllNftsOnSale()) as unknown as NftCore[];
+      await coreNfts?.wait();
+      const nfts = await handleListNfts(coreNfts, contract);
+      return nfts;
+    } catch (error) {
+      console.log("Error in listNfts", error);
+    }
   }, [web3Api]);
 
   const getOwnListNfts = useCallback(async () => {
     const { contract } = web3Api;
-    const coreNfts = (await contract?.getOwnedNfts()) as unknown as NftCore[];
-    const nfts = await handleListNfts(coreNfts, contract);
-    return nfts;
+    try {
+      const coreNfts = (await contract?.getOwnedNfts()) as unknown as NftCore[];
+      await coreNfts?.wait();
+      const nfts = await handleListNfts(coreNfts, contract);
+      return nfts;
+    } catch (error) {
+      console.log("Error in getOwnListNfts", error);
+    }
   }, [web3Api]);
 
   const buyNft = useCallback(
@@ -191,8 +201,10 @@ const Web3Provider: React.FC<Web3ProviderProps> = ({
   const getBalance = useCallback(async () => {
     const { provider, account } = web3Api;
     const balance = await provider?.getBalance(account);
-    const balanceInEth = ethers.utils.formatEther(balance);
-    return balanceInEth;
+    if (balance) {
+      const balanceInEth = ethers.utils.formatEther(balance);
+      return balanceInEth;
+    }
   }, [web3Api]);
 
   const getTransactionsByAccount = async (
@@ -228,13 +240,15 @@ const Web3Provider: React.FC<Web3ProviderProps> = ({
 
   const getTransactionHistory = useCallback(async () => {
     const { account, web3 } = web3Api;
-    const history = getTransactionsByAccount(
-      account,
-      MIN_BLOCK_NUMBER,
-      MAX_BLOCK_NUMBER,
-      web3.eth
-    );
-    return history;
+    if (web3) {
+      const history = getTransactionsByAccount(
+        account,
+        MIN_BLOCK_NUMBER,
+        MAX_BLOCK_NUMBER,
+        web3.eth
+      );
+      return history;
+    }
   }, [web3Api]);
 
   const sendPayment = useCallback(
@@ -295,7 +309,6 @@ const Web3Provider: React.FC<Web3ProviderProps> = ({
       const providerMetaMask = await detectEthereumProvider();
       if (!providerMetaMask) {
         console.log("Please install MetaMask!");
-        return;
       }
     } catch (error) {
       console.log("Please install MetaMask!");

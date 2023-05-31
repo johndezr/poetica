@@ -7,6 +7,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { MuiFileInput } from "mui-file-input";
+import { useWeb3 } from "@/contexts/Web3";
 
 type CreateAssetViewProps = {
   formProps: {
@@ -18,8 +19,15 @@ type CreateAssetViewProps = {
 
 const CreateAssetView = ({ formProps }: CreateAssetViewProps) => {
   const { handleSubmit, handleFileChange, fileValue } = formProps;
+  const {
+    web3Api: { isWalletConnected },
+  } = useWeb3();
 
-  return (
+  return !isWalletConnected ? (
+    <div>
+      <h1>Connect your wallet</h1>
+    </div>
+  ) : (
     <Container maxWidth="xs">
       <Box
         sx={{

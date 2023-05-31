@@ -25,14 +25,16 @@ const Profile = ({ user }: { user: UserValues }) => {
 
   useEffect(() => {
     (async () => {
-      const nfts = await getOwnListNfts();
-      const matchedNtfsArr = getNtfsMatchMockup(nfts);
-      const walletBalance = await getBalance();
-      const transactionHistory = await getTransactionHistory();
+      if (isWalletConnected) {
+        const nfts = await getOwnListNfts();
+        const matchedNtfsArr = getNtfsMatchMockup(nfts ? nfts : []);
+        const walletBalance = await getBalance();
+        const transactionHistory = await getTransactionHistory();
 
-      setNfts(matchedNtfsArr);
-      setBalance(walletBalance);
-      setTransactions(transactionHistory);
+        setNfts(matchedNtfsArr);
+        setBalance(walletBalance);
+        setTransactions(transactionHistory);
+      }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

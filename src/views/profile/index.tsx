@@ -33,7 +33,9 @@ const ProfileView = ({
         <Box>
           <>
             {isWalletConnected ? (
-              <h2>Wallet Address: {user?.wallet.address}</h2>
+              <h2>
+                Wallet Address: {user && user.wallet && user.wallet.address}
+              </h2>
             ) : (
               <p>Connect your wallet</p>
             )}
